@@ -1,0 +1,16 @@
+{% extends "catalog/base.html" %}
+{% block title %}Главная — LocalLibrary{% endblock %}
+{% block content %}
+<div class="panel">
+    <h2>Добро пожаловать в электронную библиотеку!</h2>
+    <p>Здесь можно просматривать каталог книг и сведения об авторах.</p>
+</div>
+<h2>Статистика библиотеки</h2>
+<div class="stats">
+    <div class="card"><div class="number">{{ num_books }}</div>Книг</div>
+    <div class="card"><div class="number">{{ num_instances }}</div>Экземпляров</div>
+    <div class="card"><div class="number">{{ num_instances_available }}</div>Доступно</div>
+    <div class="card"><div class="number">{{ num_authors }}</div>Авторов</div>
+    <div class="card"><div class="number">{{ num_genres }}</div>Жанров</div>
+</div>
+{% endblock %}

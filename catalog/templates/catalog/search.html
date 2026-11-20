@@ -1,0 +1,14 @@
+{% extends "catalog/base.html" %}
+{% block title %}Поиск — LocalLibrary{% endblock %}
+{% block content %}
+<h2>Результаты поиска</h2>
+{% if query %}<p>По запросу «{{ query }}» найдено: {{ results|length }}</p>{% endif %}
+{% for book in results %}
+<div class="card">
+    <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
+    <p>Автор: {{ book.author|default:"Не указан" }}</p>
+</div>
+{% empty %}
+<div class="panel">Ничего не найдено. Попробуйте изменить запрос.</div>
+{% endfor %}
+{% endblock %}

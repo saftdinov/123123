@@ -1,0 +1,61 @@
+
+{% extends "catalog/base.html" %}
+
+{% block title %}{{ book.title }} — LocalLibrary{% endblock %}
+
+{% block content %}
+
+<div class="panel">
+    <h2>{{ book.title }}</h2>
+
+    <p>
+        <strong>Автор:</strong>
+        {% if book.author %}
+            <a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a>
+        {% else %}
+            Не указан
+        {% endif %}
+    </p>
+
+    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+
+    <p>
+        <strong>Жанры:</strong>
+        {% for genre in book.genre.all %}
+            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            Не указаны
+        {% endfor %}
+    </p>
+
+    <p>
+        <strong>Язык:</strong>
+        {% if book.language %}
+            {{ book.language }}
+        {% else %}
+            Не указан
+        {% endif %}
+    </p>
+
+    <h3>Описание</h3>
+    <p>{{ book.summary }}</p>
+</div>
+
+<h3>Экземпляры книги</h3>
+
+{% for instance in book.instances.all %}
+    <div class="card">
+        <p><strong>Статус:</strong> {{ instance.get_status_display }}</p>
+        <p><strong>Данные экземпляра:</strong> {{ instance.imprint }}</p>
+
+        {% if instance.due_back %}
+            <p><strong>Дата возврата:</strong> {{ instance.due_back }}</p>
+        {% endif %}
+    </div>
+{% empty %}
+    <div class="card">
+        Экземпляры этой книги пока не добавлены.
+    </div>
+{% endfor %}
+
+{% endblock %}

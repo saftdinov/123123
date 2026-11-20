@@ -1,0 +1,15 @@
+{% extends "catalog/base.html" %}
+{% block title %}{{ author }} — LocalLibrary{% endblock %}
+{% block content %}
+<div class="panel">
+    <h2>{{ author.first_name }} {{ author.last_name }}</h2>
+    <p><strong>Дата рождения:</strong> {{ author.date_of_birth|default:"Не указана" }}</p>
+    <p><strong>Дата смерти:</strong> {{ author.date_of_death|default:"Не указана" }}</p>
+</div>
+<h3>Книги автора</h3>
+{% for book in author.books.all %}
+<div class="card"><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></div>
+{% empty %}
+<div class="card">Книги этого автора пока не добавлены.</div>
+{% endfor %}
+{% endblock %}

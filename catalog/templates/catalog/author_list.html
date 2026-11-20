@@ -1,0 +1,48 @@
+
+{% extends "catalog/base.html" %}
+
+{% block title %}Авторы — LocalLibrary{% endblock %}
+
+{% block content %}
+
+<h2>Авторы библиотеки</h2>
+
+{% for author in author_list %}
+    <div class="card">
+        <h3>
+            <a href="{{ author.get_absolute_url }}">
+                {{ author.last_name }} {{ author.first_name }}
+            </a>
+        </h3>
+
+        {% if author.date_of_birth %}
+            <p><strong>Дата рождения:</strong> {{ author.date_of_birth }}</p>
+        {% endif %}
+
+        {% if author.date_of_death %}
+            <p><strong>Дата смерти:</strong> {{ author.date_of_death }}</p>
+        {% endif %}
+
+        <p><strong>Книг в библиотеке:</strong> {{ author.books.count }}</p>
+    </div>
+{% empty %}
+    <div class="panel">
+        Авторы пока не добавлены. Добавьте их через административную панель.
+    </div>
+{% endfor %}
+
+{% if is_paginated %}
+    <div class="panel">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Назад</a>
+        {% endif %}
+
+        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Вперёд</a>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}

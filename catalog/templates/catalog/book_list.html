@@ -1,0 +1,21 @@
+{% extends "catalog/base.html" %}
+{% block title %}Каталог книг — LocalLibrary{% endblock %}
+{% block content %}
+<h2>Каталог книг</h2>
+{% for book in book_list %}
+<div class="card">
+    <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h3>
+    <p>Автор: {% if book.author %}<a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a>{% else %}Не указан{% endif %}</p>
+    <p>{{ book.summary|truncatewords:30 }}</p>
+</div>
+{% empty %}
+<div class="panel">Книг пока нет. Добавьте их через административную панель.</div>
+{% endfor %}
+{% if is_paginated %}
+<div class="panel">
+    {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">Назад</a>{% endif %}
+    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+    {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">Вперёд</a>{% endif %}
+</div>
+{% endif %}
+{% endblock %}
